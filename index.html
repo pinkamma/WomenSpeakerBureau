@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Women Experts: Speaker Bureau</title>
+    <style>
+        :root {
+            --color-bg-base: #fcfcf9;
+            --color-bg-surface: #fffffe;
+            --color-text-primary: #134252;
+            --color-text-secondary: #626c7c;
+            --color-primary: #21808d;
+            --color-primary-hover: #1d7480;
+            --color-border: rgba(94, 82, 64, 0.2);
+            --color-secondary: rgba(94, 82, 64, 0.12);
+            --color-secondary-hover: rgba(94, 82, 64, 0.2);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-bg-base: #1f2121;
+                --color-bg-surface: #262828;
+                --color-text-primary: #f5f5f5;
+                --color-text-secondary: #a7a9a9;
+                --color-primary: #32b8c6;
+                --color-primary-hover: #2da6b2;
+                --color-border: rgba(119, 124, 124, 0.3);
+                --color-secondary: rgba(119, 124, 124, 0.15);
+                --color-secondary-hover: rgba(119, 124, 124, 0.25);
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--color-bg-base);
+            color: var(--color-text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+            border-bottom: 2px solid var(--color-border);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--color-primary);
+        }
+
+        .subtitle {
+            font-size: 1.125rem;
+            color: var(--color-text-secondary);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--color-border);
+        }
+
+        .tab {
+            padding: 1rem 2rem;
+            background: none;
+            border: none;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tab.active {
+            color: var(--color-primary);
+            border-bottom-color: var(--color-primary);
+        }
+
+        .tab:hover {
+            color: var(--color-primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: var(--color-bg-surface);
+            color: var(--color-text-primary);
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            font-size: 1rem;
+            font-weight: 500;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--color-primary-hover);
+        }
+
+        .btn-secondary {
+            background: var(--color-secondary);
+            color: var(--color-text-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--color-secondary-hover);
+        }
+
+        .search-box {
+            margin-bottom: 2rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.125rem;
+            border: 2px solid var(--color-border);
+            border-radius: 8px;
+            background: var(--color-bg-surface);
+        }
+
+        .filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-select {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .expert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .expert-card {
+            background: var(--color-bg-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .expert-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .expert-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--color-primary);
+        }
+
+        .expert-org {
+            font-size: 0.875rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .expert-description {
+            font-size: 0.938rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .expertise-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            padding: 0.25rem 0.75rem;
+            background: var(--color-secondary);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .expert-links {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .link-btn {
+            padding: 0.5rem 1rem;
+            background: var(--color-primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            transition: background 0.3s ease;
+        }
+
+        .link-btn:hover {
+            background: var(--color-primary-hover);
+        }
+
+        .pending-submissions {
+            margin-top: 2rem;
+        }
+
+        .pending-card {
+            background: var(--color-bg-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .pending-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .alert-success {
+            background: rgba(33, 128, 141, 0.15);
+            color: var(--color-primary);
+            border: 1px solid var(--color-primary);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: var(--color-text-secondary);
+        }
+
+        .stats {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            flex: 1;
+            min-width: 150px;
+            background: var(--color-bg-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--color-text-secondary);
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Women Experts: Speaker Bureau</h1>
+            <p class="subtitle">Connecting organizations with exceptional women speakers and subject matter experts</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab active" data-tab="dashboard">Browse Experts</button>
+            <button class="tab" data-tab="submit">Submit Your Profile</button>
+            <button class="tab" data-tab="admin">Admin Panel</button>
+        </div>
+
+        <!-- Dashboard Tab -->
+        <div class="tab-content active" id="dashboard">
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="stat-number" id="totalExperts">0</div>
+                    <div class="stat-label">Total Experts</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="totalOrgs">0</div>
+                    <div class="stat-label">Organizations</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="totalTopics">0</div>
+                    <div class="stat-label">Expertise Areas</div>
+                </div>
+            </div>
+
+            <div class="search-box">
+                <input type="text" id="searchInput" class="search-input" placeholder="Search by name, organization, expertise, or keywords...">
+            </div>
+
+            <div class="filters">
+                <select id="expertiseFilter" class="filter-select">
+                    <option value="">All Expertise Areas</option>
+                </select>
+                <select id="orgFilter" class="filter-select">
+                    <option value="">All Organizations</option>
+                </select>
+            </div>
+
+            <div class="expert-grid" id="expertGrid">
+                <!-- Expert cards will be populated here -->
+            </div>
+        </div>
+
+        <!-- Submit Tab -->
+        <div class="tab-content" id="submit">
+            <div style="max-width: 700px; margin: 0 auto;">
+                <h2 style="margin-bottom: 1.5rem;">Submit Your Expert Profile</h2>
+                <p style="margin-bottom: 2rem; color: var(--color-text-secondary);">Fill out the form below to be considered for inclusion in our speaker bureau. Your submission will be reviewed by Anjali before appearing publicly.</p>
+
+                <div id="submitAlert"></div>
+
+                <form id="expertForm">
+                    <div class="form-group">
+                        <label for="fullName">Full Name *</label>
+                        <input type="text" id="fullName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="organization">Organization Name *</label>
+                        <input type="text" id="organization" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Professional Description *</label>
+                        <textarea id="description" required placeholder="Brief description of your background, experience, and speaking topics (200-300 words)"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="expertise">Subject Matters of Expertise *</label>
+                        <input type="text" id="expertise" required placeholder="Separate multiple topics with commas (e.g., AI, Healthcare, Leadership)">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="linkedinProfile">LinkedIn Profile URL *</label>
+                        <input type="url" id="linkedinProfile" required placeholder="https://www.linkedin.com/in/yourprofile">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pictureUrl">Profile Picture URL</label>
+                        <input type="url" id="pictureUrl" placeholder="Direct link to your professional headshot">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="eventLinks">Links to Recent Events/Presentations</label>
+                        <textarea id="eventLinks" placeholder="Paste links to videos, articles, or event pages (one per line)"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Your Email *</label>
+                        <input type="email" id="email" required placeholder="For follow-up communication">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <input type="tel" id="phone" required placeholder="+91 XXXXX XXXXX">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit for Review</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Admin Tab -->
+        <div class="tab-content" id="admin">
+            <div style="max-width: 800px; margin: 0 auto;">
+                <h2 style="margin-bottom: 1.5rem;">Admin Panel</h2>
+                
+                <div class="form-group">
+                    <label for="adminPassword">Enter Admin Password</label>
+                    <input type="password" id="adminPassword" placeholder="Enter password to view pending submissions">
+                    <button class="btn btn-primary" onclick="unlockAdmin()" style="margin-top: 1rem;">Unlock</button>
+                </div>
+
+                <div id="adminContent" style="display: none;">
+                    <h3 style="margin-top: 2rem; margin-bottom: 1rem;">Pending Submissions (<span id="pendingCount">0</span>)</h3>
+                    <div id="pendingSubmissions"></div>
+
+                    <h3 style="margin-top: 3rem; margin-bottom: 1rem;">All Approved Experts (<span id="approvedCount">0</span>)</h3>
+                    <div id="approvedExperts"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://ubemwcyurzrehnqwdvka.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InViZW13Y3l1cnpyZWhucXdkdmthIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI2MDUyMTYsImV4cCI6MjA4ODE4MTIxNn0.6Wo-Uzy2ba4uGznjR7o7uExjzLDRB3gkbOZJB_vGWOs';
+const ADMIN_PASSWORD = 'anjali2026';
+
+// Initialize Supabase client
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        
+
+        function initializeTabs() {
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabName = tab.dataset.tab;
+                    
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(tc => tc.classList.remove('active'));
+                    
+                    tab.classList.add('active');
+                    document.getElementById(tabName).classList.add('active');
+                });
+            });
+        }
+
+        function renderExperts(filteredExperts = experts) {
+            const grid = document.getElementById('expertGrid');
+            
+            if (filteredExperts.length === 0) {
+                grid.innerHTML = '<div class="no-results">No experts found matching your criteria. Try adjusting your search or filters.</div>';
+                return;
+            }
+
+            grid.innerHTML = filteredExperts.map(expert => {
+                const expertiseTags = expert.expertise.split(',').map(e => e.trim());
+                const links = expert.eventLinks.split('\n').filter(l => l.trim());
+                
+                return `
+                    <div class="expert-card">
+                        ${expert.pictureUrl ? `
+                            <img src="${escapeHtml(expert.pictureUrl)}" alt="${escapeHtml(expert.fullName)}" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin-bottom: 1rem;">
+                        ` : ''}
+                        <div class="expert-name">${escapeHtml(expert.fullName)}</div>
+                        <div class="expert-org">${escapeHtml(expert.organization)}</div>
+                        <div class="expert-description">${escapeHtml(expert.description)}</div>
+                        <div class="expertise-tags">
+                            ${expertiseTags.map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('')}
+                        </div>
+                        ${expert.linkedinProfile ? `
+                            <div class="expert-links" style="margin-bottom: 0.5rem;">
+                                <a href="${escapeHtml(expert.linkedinProfile)}" target="_blank" rel="noopener noreferrer" class="link-btn" style="background: #0077b5;">LinkedIn Profile</a>
+                            </div>
+                        ` : ''}
+                        ${links.length > 0 ? `
+                            <div class="expert-links">
+                                ${links.map((link, idx) => `
+                                    <a href="${escapeHtml(link)}" target="_blank" rel="noopener noreferrer" class="link-btn">Event ${idx + 1}</a>
+                                `).join('')}
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateStats() {
+            document.getElementById('totalExperts').textContent = experts.length;
+            
+            const uniqueOrgs = new Set(experts.map(e => e.organization));
+            document.getElementById('totalOrgs').textContent = uniqueOrgs.size;
+            
+            const allExpertise = experts.flatMap(e => e.expertise.split(',').map(x => x.trim()));
+            const uniqueTopics = new Set(allExpertise);
+            document.getElementById('totalTopics').textContent = uniqueTopics.size;
+        }
+
+        function updateFilters() {
+            const expertiseSet = new Set();
+            const orgSet = new Set();
+            
+            experts.forEach(expert => {
+                expert.expertise.split(',').forEach(e => expertiseSet.add(e.trim()));
+                orgSet.add(expert.organization);
+            });
+            
+            const expertiseFilter = document.getElementById('expertiseFilter');
+            const currentExpertise = expertiseFilter.value;
+            expertiseFilter.innerHTML = '<option value="">All Expertise Areas</option>' +
+                Array.from(expertiseSet).sort().map(e => 
+                    `<option value="${escapeHtml(e)}">${escapeHtml(e)}</option>`
+                ).join('');
+            expertiseFilter.value = currentExpertise;
+            
+            const orgFilter = document.getElementById('orgFilter');
+            const currentOrg = orgFilter.value;
+            orgFilter.innerHTML = '<option value="">All Organizations</option>' +
+                Array.from(orgSet).sort().map(o => 
+                    `<option value="${escapeHtml(o)}">${escapeHtml(o)}</option>`
+                ).join('');
+            orgFilter.value = currentOrg;
+        }
+
+        function filterExperts() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const expertiseFilter = document.getElementById('expertiseFilter').value;
+            const orgFilter = document.getElementById('orgFilter').value;
+            
+            const filtered = experts.filter(expert => {
+                const matchesSearch = searchTerm === '' || 
+                    expert.fullName.toLowerCase().includes(searchTerm) ||
+                    expert.organization.toLowerCase().includes(searchTerm) ||
+                    expert.description.toLowerCase().includes(searchTerm) ||
+                    expert.expertise.toLowerCase().includes(searchTerm);
+                
+                const matchesExpertise = expertiseFilter === '' || 
+                    expert.expertise.split(',').map(e => e.trim()).includes(expertiseFilter);
+                
+                const matchesOrg = orgFilter === '' || expert.organization === orgFilter;
+                
+                return matchesSearch && matchesExpertise && matchesOrg;
+            });
+            
+            renderExperts(filtered);
+        }
+
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+
+        document.getElementById('expertForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submission = {
+                id: Date.now(),
+                fullName: document.getElementById('fullName').value,
+                organization: document.getElementById('organization').value,
+                description: document.getElementById('description').value,
+                expertise: document.getElementById('expertise').value,
+                linkedinProfile: document.getElementById('linkedinProfile').value,
+                pictureUrl: document.getElementById('pictureUrl').value,
+                eventLinks: document.getElementById('eventLinks').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                submittedAt: new Date().toISOString()
+            };
+            
+            pendingSubmissions.push(submission);
+            
+            document.getElementById('submitAlert').innerHTML = `
+                <div class="alert alert-success">
+                    <strong>Success!</strong> Your profile has been submitted for review. You'll receive an email once it's approved.
+                </div>
+            `;
+            
+            this.reset();
+            
+            setTimeout(() => {
+                document.getElementById('submitAlert').innerHTML = '';
+            }, 5000);
+        });
+
+        function unlockAdmin() {
+            const password = document.getElementById('adminPassword').value;
+            if (password === ADMIN_PASSWORD) {
+                document.getElementById('adminContent').style.display = 'block';
+                renderPendingSubmissions();
+                renderApprovedExperts();
+            } else {
+                alert('Incorrect password');
+            }
+        }
+
+        function renderPendingSubmissions() {
+            const container = document.getElementById('pendingSubmissions');
+            document.getElementById('pendingCount').textContent = pendingSubmissions.length;
+            
+            if (pendingSubmissions.length === 0) {
+                container.innerHTML = '<div class="no-results">No pending submissions</div>';
+                return;
+            }
+            
+            container.innerHTML = pendingSubmissions.map(submission => `
+                <div class="pending-card">
+                    ${submission.pictureUrl ? `
+                        <img src="${escapeHtml(submission.pictureUrl)}" alt="${escapeHtml(submission.fullName)}" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 1rem;">
+                    ` : ''}
+                    <div class="expert-name">${escapeHtml(submission.fullName)}</div>
+                    <div class="expert-org">${escapeHtml(submission.organization)}</div>
+                    <div class="expert-description" style="margin-top: 1rem;">${escapeHtml(submission.description)}</div>
+                    <p style="margin-top: 1rem;"><strong>Expertise:</strong> ${escapeHtml(submission.expertise)}</p>
+                    <p><strong>LinkedIn:</strong> <a href="${escapeHtml(submission.linkedinProfile)}" target="_blank" rel="noopener noreferrer">${escapeHtml(submission.linkedinProfile)}</a></p>
+                    ${submission.eventLinks ? `<p><strong>Event Links:</strong><br>${escapeHtml(submission.eventLinks)}</p>` : ''}
+                    <p><strong>Email:</strong> <a href="mailto:${escapeHtml(submission.email)}">${escapeHtml(submission.email)}</a></p>
+                    <p><strong>Phone:</strong> <a href="tel:${escapeHtml(submission.phone)}">${escapeHtml(submission.phone)}</a></p>
+                    <p style="font-size: 0.875rem; color: var(--color-text-secondary);">Submitted: ${new Date(submission.submittedAt).toLocaleString()}</p>
+                    <div class="pending-actions">
+                        <button class="btn btn-primary" onclick="approveSubmission(${submission.id})">Approve</button>
+                        <button class="btn btn-secondary" onclick="rejectSubmission(${submission.id})">Reject</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function approveSubmission(id) {
+            const index = pendingSubmissions.findIndex(s => s.id === id);
+            if (index !== -1) {
+                const approved = pendingSubmissions.splice(index, 1)[0];
+                experts.push(approved);
+                renderPendingSubmissions();
+                renderExperts();
+                updateStats();
+                updateFilters();
+            }
+        }
+
+        function rejectSubmission(id) {
+            const index = pendingSubmissions.findIndex(s => s.id === id);
+            if (index !== -1) {
+                pendingSubmissions.splice(index, 1);
+                renderPendingSubmissions();
+            }
+        }
+
+        function renderApprovedExperts() {
+            const container = document.getElementById('approvedExperts');
+            document.getElementById('approvedCount').textContent = experts.length;
+            
+            if (experts.length === 0) {
+                container.innerHTML = '<div class="no-results">No approved experts yet</div>';
+                return;
+            }
+            
+            container.innerHTML = experts.map(expert => `
+                <div class="pending-card">
+                    ${expert.pictureUrl ? `
+                        <img src="${escapeHtml(expert.pictureUrl)}" alt="${escapeHtml(expert.fullName)}" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 1rem;">
+                    ` : ''}
+                    <div class="expert-name">${escapeHtml(expert.fullName)}</div>
+                    <div class="expert-org">${escapeHtml(expert.organization)}</div>
+                    <div class="expert-description" style="margin-top: 1rem;">${escapeHtml(expert.description)}</div>
+                    <p style="margin-top: 1rem;"><strong>Expertise:</strong> ${escapeHtml(expert.expertise)}</p>
+                    <p><strong>LinkedIn:</strong> <a href="${escapeHtml(expert.linkedinProfile)}" target="_blank" rel="noopener noreferrer">${escapeHtml(expert.linkedinProfile)}</a></p>
+                    ${expert.eventLinks ? `<p><strong>Event Links:</strong><br>${escapeHtml(expert.eventLinks)}</p>` : ''}
+                    <p><strong>Email:</strong> <a href="mailto:${escapeHtml(expert.email)}">${escapeHtml(expert.email)}</a></p>
+                    <p><strong>Phone:</strong> <a href="tel:${escapeHtml(expert.phone)}">${escapeHtml(expert.phone)}</a></p>
+                    <p style="font-size: 0.875rem; color: var(--color-text-secondary);">Approved: ${new Date(expert.submittedAt).toLocaleString()}</p>
+                    <div class="pending-actions">
+                        <button class="btn btn-primary" onclick="editExpert(${expert.id})">Edit</button>
+                        <button class="btn btn-secondary" onclick="deleteExpert(${expert.id})">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function editExpert(id) {
+            const expert = experts.find(e => e.id === id);
+            if (!expert) return;
+            
+            const newName = prompt('Full Name:', expert.fullName);
+            if (newName === null) return;
+            
+            const newOrg = prompt('Organization:', expert.organization);
+            if (newOrg === null) return;
+            
+            const newDesc = prompt('Description:', expert.description);
+            if (newDesc === null) return;
+            
+            const newExpertise = prompt('Expertise (comma-separated):', expert.expertise);
+            if (newExpertise === null) return;
+            
+            const newLinkedIn = prompt('LinkedIn URL:', expert.linkedinProfile);
+            if (newLinkedIn === null) return;
+            
+            const newPicture = prompt('Picture URL:', expert.pictureUrl || '');
+            if (newPicture === null) return;
+            
+            const newEmail = prompt('Email:', expert.email);
+            if (newEmail === null) return;
+            
+            const newPhone = prompt('Phone:', expert.phone);
+            if (newPhone === null) return;
+            
+            expert.fullName = newName;
+            expert.organization = newOrg;
+            expert.description = newDesc;
+            expert.expertise = newExpertise;
+            expert.linkedinProfile = newLinkedIn;
+            expert.pictureUrl = newPicture;
+            expert.email = newEmail;
+            expert.phone = newPhone;
+            
+            renderApprovedExperts();
+            renderExperts();
+            updateStats();
+            updateFilters();
+        }
+
+        function deleteExpert(id) {
+            if (!confirm('Are you sure you want to delete this expert profile? This action cannot be undone.')) {
+                return;
+            }
+            
+            const index = experts.findIndex(e => e.id === id);
+            if (index !== -1) {
+                experts.splice(index, 1);
+                renderApprovedExperts();
+                renderExperts();
+                updateStats();
+                updateFilters();
+            }
+        }
+
+        document.getElementById('searchInput').addEventListener('input', filterExperts);
+        document.getElementById('expertiseFilter').addEventListener('change', filterExperts);
+        document.getElementById('orgFilter').addEventListener('change', filterExperts);
+
+        initializeTabs();
+        renderExperts();
+        updateStats();
+        updateFilters();
+
+        experts.push({
+            id: 1,
+            fullName: 'Dr. Priya Sharma',
+            organization: 'Indian Institute of Technology, Bombay',
+            description: 'Dr. Sharma is a leading researcher in artificial intelligence and machine learning with over 15 years of experience. She specializes in natural language processing and has published over 50 peer-reviewed papers. She regularly speaks at international conferences on AI ethics and responsible technology development.',
+            expertise: 'Artificial Intelligence, Machine Learning, NLP, AI Ethics',
+            linkedinProfile: 'https://www.linkedin.com/in/priyasharma',
+            pictureUrl: '',
+            eventLinks: 'https://example.com/talk1\nhttps://example.com/talk2',
+            email: 'priya.sharma@example.com',
+            phone: '+91 98765 43210',
+            submittedAt: new Date().toISOString()
+        });
+
+        experts.push({
+            id: 2,
+            fullName: 'Meera Patel',
+            organization: 'Tech Innovations India',
+            description: 'Meera is a serial entrepreneur and venture capitalist focused on Indian startups. She has founded three successful companies and now invests in early-stage technology ventures. Her expertise spans fintech, consumer tech, and women-led entrepreneurship. She is a frequent speaker on startup ecosystems and fundraising strategies.',
+            expertise: 'Entrepreneurship, Venture Capital, Fintech, Women in Tech',
+            linkedinProfile: 'https://www.linkedin.com/in/meerapatel',
+            pictureUrl: '',
+            eventLinks: 'https://example.com/podcast\nhttps://example.com/conference',
+            email: 'meera.patel@example.com',
+            phone: '+91 98765 43211',
+            submittedAt: new Date().toISOString()
+        });
+
+        renderExperts();
+        updateStats();
+        updateFilters();
+    </script>
+</body>
+</html>
+
